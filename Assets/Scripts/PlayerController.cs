@@ -9,6 +9,9 @@ public class PlayerController : MonoBehaviour {
     public Text countText;
     public int maxPoint;
     public string nextScene;
+    public int health;
+    public string loseScene;
+    public Text healthText;
 
     private Rigidbody rb;
     private int count;
@@ -18,6 +21,7 @@ public class PlayerController : MonoBehaviour {
         rb = GetComponent<Rigidbody>();
         count = 0;
         SetCountText();
+        SetHealthText();
     }
 
     // Update is called once per frame
@@ -43,10 +47,25 @@ public class PlayerController : MonoBehaviour {
         {
             SceneManager.LoadScene(nextScene, LoadSceneMode.Additive);
         }
+        else if (other.gameObject.CompareTag("Damages"))
+        {
+            Debug.Log("hit");
+            health -= 1;
+            SetHealthText();
+            if (health <= 0)
+            {
+                SceneManager.LoadScene(loseScene, LoadSceneMode.Additive);
+            }
+        }
     }
 
     void SetCountText()
     {
         countText.text = "Count: " + count.ToString();
+    }
+
+    void SetHealthText()
+    {
+        healthText.text = "Health: " + health.ToString();
     }
 }
