@@ -9,8 +9,12 @@ public class PlayerController : MonoBehaviour {
     public Text countText;
     public int maxPoint;
     public string nextScene;
-    public int health;
-    public string loseScene;
+    
+	private int health;
+    public int maxHealth;
+    public Image healthImage;
+	
+	public string loseScene;
     public Text healthText;
 
     private Rigidbody rb;
@@ -21,6 +25,7 @@ public class PlayerController : MonoBehaviour {
         rb = GetComponent<Rigidbody>();
         count = 0;
         SetCountText();
+        health = maxHealth;
         SetHealthText();
     }
 
@@ -67,5 +72,7 @@ public class PlayerController : MonoBehaviour {
     void SetHealthText()
     {
         healthText.text = "Health: " + health.ToString();
+		healthImage.rectTransform.sizeDelta = new Vector2(health * 100 / maxHealth, 26);
+		healthImage.rectTransform.transform.Translate(-50/maxHealth,0,0);
     }
 }
